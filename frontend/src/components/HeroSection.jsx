@@ -1,4 +1,5 @@
 import React from "react";
+import heroImage from "../assets/healthy-plate.jpeg";
 
 const HeroSection = () => {
   return (
@@ -48,7 +49,7 @@ const HeroSection = () => {
       {/* --- Image Section --- */}
       <div className="w-full md:w-2/5 lg:w-1/2 flex justify-center relative">
         <img
-          src="/images/healthyfood.jpg"
+          src={heroImage}
           alt="Healthy Indian Food"
           className="rounded-3xl shadow-lg w-full max-w-lg object-cover"
         />

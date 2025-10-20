@@ -9,12 +9,14 @@ import Feedback from "./components/Feedback";
 import Footer from "./components/Footer";
 import './App.css'
 import NutritionPyramid from "./components/NutritionPyramid";
+import HeroSection from "./components/HeroSection";
 
 function App() {
   return (
     <>
       <Navbar />
-      <Home />
+      
+      <HeroSection/>
       <Facts />
       <NutritionPyramid/>
       <Recipes />
@@ -22,6 +24,7 @@ function App() {
       <MealPlanner />
       <Feedback />
       <Footer />
+      
     </>
   );
 }
