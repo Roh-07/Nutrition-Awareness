@@ -107,7 +107,6 @@ export default function NutritionPyramid() {
         }}
       >
         {pyramidData.map((layer, index) => {
-          // Calculate width: top tile = 40%, bottom tile = 100%
           const minWidth = 40;
           const maxWidth = 100;
           const widthPercent =
@@ -116,54 +115,80 @@ export default function NutritionPyramid() {
           return (
             <div
               key={index}
-              onMouseEnter={() => setActive(index)}
-              onMouseLeave={() => setActive(null)}
-              style={{
-                width: `${widthPercent}%`,
-                padding: "20px 0",
-                background: layer.gradient,
-                color: "white",
-                fontWeight: "600",
-                textAlign: "center",
-                cursor: "pointer",
-                transition: "all 0.3s ease",
-              }}
+              style={{ position: "relative", width: "100%" }} // container for description
             >
-              <div style={{ fontSize: "16px" }}>{layer.label}</div>
-              <div style={{ fontSize: "12px", marginTop: "4px" }}>{layer.servings}</div>
+              <div
+                onMouseEnter={() => setActive(index)}
+                onMouseLeave={() => setActive(null)}
+                style={{
+                  width: `${widthPercent}%`,
+                  padding: "20px 0",
+                  background: layer.gradient,
+                  color: "white",
+                  fontWeight: "600",
+                  textAlign: "center",
+                  cursor: "pointer",
+                  margin: "0 auto",
+                  transition: "all 0.3s ease",
+                }}
+              >
+                <div style={{ fontSize: "16px" }}>{layer.label}</div>
+                <div style={{ fontSize: "12px", marginTop: "4px" }}>
+                  {layer.servings}
+                </div>
+              </div>
+
+              {/* Description box beside tile */}
+              {active === index && (
+                <div
+                  style={{
+                    position: "absolute",
+                    left: "105%", // right side of tile
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    backgroundColor: "white",
+                    boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
+                    borderRadius: "6px",
+                    padding: "12px 16px",
+                    width: "300px",
+                    border: "1px solid #e5e7eb",
+                    zIndex: 10,
+                  }}
+                >
+                  <p style={{ fontWeight: "600", color: "#1f2937" }}>
+                    {layer.details.title}
+                  </p>
+                  <p
+                    style={{
+                      color: "#4b5563",
+                      fontSize: "14px",
+                      marginTop: "6px",
+                    }}
+                  >
+                    {layer.details.text}
+                  </p>
+                  <p
+                    style={{
+                      color: "#6b7280",
+                      fontSize: "14px",
+                      marginTop: "8px",
+                    }}
+                  >
+                    <span
+                      style={{ fontWeight: "500", color: "#374151" }}
+                    >
+                      Examples:{" "}
+                    </span>
+                    <span style={{ color: "#15803d" }}>
+                      {layer.details.examples}
+                    </span>
+                  </p>
+                </div>
+              )}
             </div>
           );
         })}
       </div>
-
-      {/* Info Box */}
-      {active !== null && (
-        <div
-          style={{
-            marginTop: "25px",
-            backgroundColor: "white",
-            boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
-            borderRadius: "6px",
-            padding: "18px",
-            width: "350px",
-            border: "1px solid #e5e7eb",
-            transition: "all 0.3s ease",
-          }}
-        >
-          <p style={{ fontWeight: "600", color: "#1f2937" }}>
-            {pyramidData[active].details.title}
-          </p>
-          <p style={{ color: "#4b5563", fontSize: "14px", marginTop: "6px" }}>
-            {pyramidData[active].details.text}
-          </p>
-          <p style={{ color: "#6b7280", fontSize: "14px", marginTop: "8px" }}>
-            <span style={{ fontWeight: "500", color: "#374151" }}>Examples: </span>
-            <span style={{ color: "#15803d" }}>
-              {pyramidData[active].details.examples}
-            </span>
-          </p>
-        </div>
-      )}
     </div>
   );
 }
