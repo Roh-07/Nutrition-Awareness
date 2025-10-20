@@ -4,7 +4,7 @@ const pyramidData = [
   {
     label: "Fats, Oils & Sweets",
     servings: "Use Sparingly",
-    color: "bg-yellow-400",
+    gradient: "linear-gradient(to right, #facc15, #fcd34d)",
     details: {
       title: "Fats, Oils & Sweets",
       text: "Use these sparingly. High in calories but low in nutrients.",
@@ -14,7 +14,7 @@ const pyramidData = [
   {
     label: "Milk & Dairy",
     servings: "2–3 servings/day",
-    color: "bg-sky-300",
+    gradient: "linear-gradient(to right, #38bdf8, #60a5fa)",
     details: {
       title: "Milk & Dairy",
       text: "Provide calcium and protein for bone and muscle health.",
@@ -24,7 +24,7 @@ const pyramidData = [
   {
     label: "Protein Foods",
     servings: "2–3 servings/day",
-    color: "bg-red-400",
+    gradient: "linear-gradient(to right, #f87171, #fca5a5)",
     details: {
       title: "Protein Foods",
       text: "Help build and repair body tissues.",
@@ -34,7 +34,7 @@ const pyramidData = [
   {
     label: "Vegetables",
     servings: "3–5 servings/day",
-    color: "bg-green-500",
+    gradient: "linear-gradient(to right, #22c55e, #4ade80)",
     details: {
       title: "Vegetables",
       text: "Packed with vitamins, minerals, and fiber.",
@@ -44,7 +44,7 @@ const pyramidData = [
   {
     label: "Fruits",
     servings: "2–4 servings/day",
-    color: "bg-orange-500",
+    gradient: "linear-gradient(to right, #f97316, #fb923c)",
     details: {
       title: "Fruits",
       text: "Rich in vitamins and natural sugars for energy.",
@@ -54,7 +54,7 @@ const pyramidData = [
   {
     label: "Grains & Cereals",
     servings: "6–11 servings/day",
-    color: "bg-amber-400",
+    gradient: "linear-gradient(to right, #fbbf24, #fcd34d)",
     details: {
       title: "Grains & Cereals",
       text: "Primary source of energy; rich in carbohydrates and fiber.",
@@ -65,50 +65,100 @@ const pyramidData = [
 
 export default function NutritionPyramid() {
   const [active, setActive] = useState(null);
+  const totalLayers = pyramidData.length;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white p-4">
-      <h1 className="text-3xl font-semibold mb-2 text-green-700">
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "#f3f4f6",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        fontFamily: "sans-serif",
+        padding: "20px",
+      }}
+    >
+      <h1 style={{ fontSize: "32px", color: "#15803d", marginBottom: "12px" }}>
         The Nutrition Pyramid
       </h1>
-      <p className="text-gray-600 max-w-md text-center mb-8">
+      <p
+        style={{
+          color: "#4b5563",
+          maxWidth: "500px",
+          textAlign: "center",
+          marginBottom: "30px",
+        }}
+      >
         A balanced diet includes all food groups in the right proportions.
         Follow the Nutrition Pyramid to maintain a healthy and active lifestyle.
       </p>
 
       {/* Pyramid */}
-      <div className="flex flex-col items-center space-y-2">
-        {pyramidData.map((layer, index) => (
-          <div
-            key={index}
-            onMouseEnter={() => setActive(index)}
-            onMouseLeave={() => setActive(null)}
-            className={`relative ${layer.color} text-white font-medium py-3 text-center cursor-pointer transition-transform duration-300 hover:scale-105`}
-            style={{
-              width: `${100 + index * 30}%`,
-              height:'80px',
-              clipPath:
-                "polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%)",
-            }}
-          >
-            <p>{layer.label}</p>
-            <p className="text-sm">{layer.servings}</p>
-          </div>
-        ))}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "100%",
+          maxWidth: "600px",
+          gap: "2px",
+        }}
+      >
+        {pyramidData.map((layer, index) => {
+          // Calculate width: top tile = 40%, bottom tile = 100%
+          const minWidth = 40;
+          const maxWidth = 100;
+          const widthPercent =
+            minWidth + ((maxWidth - minWidth) * index) / (totalLayers - 1);
+
+          return (
+            <div
+              key={index}
+              onMouseEnter={() => setActive(index)}
+              onMouseLeave={() => setActive(null)}
+              style={{
+                width: `${widthPercent}%`,
+                padding: "20px 0",
+                background: layer.gradient,
+                color: "white",
+                fontWeight: "600",
+                textAlign: "center",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+              }}
+            >
+              <div style={{ fontSize: "16px" }}>{layer.label}</div>
+              <div style={{ fontSize: "12px", marginTop: "4px" }}>{layer.servings}</div>
+            </div>
+          );
+        })}
       </div>
 
-      {/* Info box */}
+      {/* Info Box */}
       {active !== null && (
-        <div className="mt-6 bg-white shadow-lg rounded-xl p-4 w-[320px] border border-gray-200 transition-all duration-300">
-          <p className="font-semibold text-gray-800">
+        <div
+          style={{
+            marginTop: "25px",
+            backgroundColor: "white",
+            boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
+            borderRadius: "6px",
+            padding: "18px",
+            width: "350px",
+            border: "1px solid #e5e7eb",
+            transition: "all 0.3s ease",
+          }}
+        >
+          <p style={{ fontWeight: "600", color: "#1f2937" }}>
             {pyramidData[active].details.title}
           </p>
-          <p className="text-gray-600 text-sm mt-1">
+          <p style={{ color: "#4b5563", fontSize: "14px", marginTop: "6px" }}>
             {pyramidData[active].details.text}
           </p>
-          <p className="text-gray-500 text-sm mt-2">
-            <span className="font-medium text-gray-700">Examples: </span>
-            <span className="text-green-600">
+          <p style={{ color: "#6b7280", fontSize: "14px", marginTop: "8px" }}>
+            <span style={{ fontWeight: "500", color: "#374151" }}>Examples: </span>
+            <span style={{ color: "#15803d" }}>
               {pyramidData[active].details.examples}
             </span>
           </p>
