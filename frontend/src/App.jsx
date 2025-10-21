@@ -7,8 +7,9 @@ import MealPlanner from "./components/MealPlanner";
 import QuizSection from "./components/QuizSection";
 import NutritionPyramid from "./components/NutritionPyramid";
 import FAQ from "./components/FAQ";
-import Feedback from "./components/Feedback"; // ✅ Added
+import Feedback from "./components/Feedback";
 import Footer from "./components/Footer";
+import Registration from "./components/Registration"; // ✅ Correct path
 import "./App.css";
 
 const App = () => {
@@ -56,6 +57,11 @@ const App = () => {
       {/* ✅ FAQ Section */}
       <section id="faq" className="scroll-mt-24">
         <FAQ />
+      </section>
+
+      {/* ✅ Registration Section */}
+      <section id="register" className="scroll-mt-24">
+        <Registration />
       </section>
 
       {/* ✅ Feedback Section */}

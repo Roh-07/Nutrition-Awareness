@@ -42,43 +42,7 @@ const Feedback = () => {
           Share your thoughts, suggestions, or questions
         </p>
 
-        {/* FORM */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Name Field */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">
-              Your Name <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              name="name"
-              required
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="John Doe"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 
-                         focus:ring-2 focus:ring-green-400 outline-none
-                         text-gray-900 placeholder-gray-400 bg-white"
-            />
-          </div>
-
-          {/* Email Field */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">
-              Email Address <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="email"
-              name="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="john@example.com"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 
-                         focus:ring-2 focus:ring-green-400 outline-none
-                         text-gray-900 placeholder-gray-400 bg-white"
-            />
-          </div>
 
           {/* Message Field */}
           <div>
