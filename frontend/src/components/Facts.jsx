@@ -1,105 +1,120 @@
-import React, { useState, useEffect } from "react";
-import { Heart, Droplet, Zap, Apple } from "lucide-react"; // icons from lucide-react
+import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { Lightbulb, Heart, Droplet, Zap, Apple, Moon } from 'lucide-react';
 
 const facts = [
   {
-    title: "Heart Health",
-    text: "Eating just 30g of nuts daily can reduce heart disease risk by 30%.",
-    icon: <Heart className="text-green-600 w-6 h-6" />,
+    icon: Lightbulb,
+    title: '70% Water',
+    description: 'The human body is composed of approximately 70% water. Stay hydrated!'
   },
   {
-    title: "Dal Power",
-    text: "Indian dal provides 25% of daily protein needs in just one serving.",
-    icon: <Droplet className="text-green-600 w-6 h-6" />,
+    icon: Heart,
+    title: 'Heart Health',
+    description: 'Eating just 30g of nuts daily can reduce heart disease risk by 30%'
   },
   {
-    title: "Turmeric Benefits",
-    text: "Curcumin in turmeric has powerful anti-inflammatory properties.",
-    icon: <Zap className="text-green-600 w-6 h-6" />,
+    icon: Droplet,
+    title: 'Dal Power',
+    description: 'Indian dal provides 25% of daily protein needs in just one serving'
   },
   {
-    title: "Fiber Intake",
-    text: "Adults need 25–30g of fiber daily. Most Indians get only about 15g.",
-    icon: <Apple className="text-green-600 w-6 h-6" />,
+    icon: Zap,
+    title: 'Turmeric Benefits',
+    description: 'Curcumin in turmeric has powerful anti-inflammatory properties'
   },
   {
-    title: "Hydration",
-    text: "Drinking enough water helps maintain body temperature and digestion.",
-    icon: <Droplet className="text-green-600 w-6 h-6" />,
+    icon: Apple,
+    title: 'Fiber Intake',
+    description: 'Adults need 25-30g of fiber daily. Most Indians get only 15g'
   },
+  {
+    icon: Moon,
+    title: 'Sleep & Diet',
+    description: 'A balanced diet improves sleep quality by up to 40%'
+  }
 ];
 
 export default function Facts() {
-  const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const scrollRef = useRef(null);
 
-  // Auto-scroll effect
   useEffect(() => {
-    if (paused) return;
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % facts.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [paused]);
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer || isPaused) return;
+
+    let animationId;
+    let scrollPosition = 0;
+
+    const scroll = () => {
+      scrollPosition += 0.5;
+      if (scrollPosition >= scrollContainer.scrollWidth / 2) {
+        scrollPosition = 0;
+      }
+      scrollContainer.scrollLeft = scrollPosition;
+      animationId = requestAnimationFrame(scroll);
+    };
+
+    animationId = requestAnimationFrame(scroll);
+    return () => cancelAnimationFrame(animationId);
+  }, [isPaused]);
 
   return (
-    <section
-      id="facts"
-      className="bg-gradient-to-b from-green-50 to-white py-16 px-6 text-center"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-2 flex items-center justify-center gap-2">
-          <span role="img" aria-label="lightbulb">💡</span> Did You Know?
-        </h2>
-        <p className="text-gray-600 mb-8">
-          Fascinating facts about nutrition and health
-        </p>
+    <section className="py-16 bg-gradient-to-r from-[#E8F5E9] to-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-[#222] mb-4 text-2xl font-semibold">💡 Did You Know?</h2>
+          <p className="text-[#555]">Fascinating facts about nutrition and health</p>
+        </motion.div>
 
-        {/* Carousel Wrapper */}
-        <div className="overflow-hidden relative">
-          <div
-            className="flex transition-transform duration-700 ease-in-out"
-            style={{
-              transform: `translateX(-${index * 25}%)`, // show 4 at a time
-              width: `${facts.length * 25}%`,
-            }}
-          >
-            {facts.map((fact, i) => (
-              <div
-                key={i}
-                className="w-1/4 flex-shrink-0 px-3"
+        <div
+          ref={scrollRef}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          className="flex gap-6 overflow-x-auto scrollbar-hide"
+          style={{ scrollBehavior: 'auto' }}
+        >
+          {[...facts, ...facts].map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: (index % facts.length) * 0.1 }}
+                className="flex-shrink-0 w-80 bg-white rounded-xl p-6 border-l-4 border-[#3CB371] shadow-md hover:shadow-xl transition-shadow duration-400 cursor-pointer"
               >
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-green-100 hover:shadow-md transition text-left h-full flex flex-col justify-center">
-                  <div className="mb-3 flex items-center justify-start">
-                    <div className="bg-green-50 p-3 rounded-full">
-                      {fact.icon}
-                    </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#3CB371] to-[#00A676] flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-800">
-                    {fact.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm mt-2">{fact.text}</p>
+                  <div className="flex-1">
+                    <h3 className="text-[#222] mb-2 font-medium">{item.title}</h3>
+                    <p className="text-[#555]">{item.description}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Dots indicator */}
-        <div className="flex justify-center mt-6 space-x-2">
-          {facts.map((_, i) => (
-            <button
-              key={i}
-              className={`h-2.5 w-2.5 rounded-full transition ${
-                index === i ? "bg-green-600" : "bg-green-300"
-              }`}
-              onClick={() => setIndex(i)}
-            />
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
+
+      <style>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </section>
   );
 }
