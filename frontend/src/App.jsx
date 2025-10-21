@@ -5,8 +5,9 @@ import Recipes from "./components/Recipes";
 import BMICalculator from "./components/BMICalculator";
 import MealPlanner from "./components/MealPlanner";
 import QuizSection from "./components/QuizSection";
-import NutritionPyramid from "./components/NutritionPyramid"; // ✅ Added
+import NutritionPyramid from "./components/NutritionPyramid";
 import FAQ from "./components/FAQ";
+import Feedback from "./components/Feedback"; // ✅ Added
 import Footer from "./components/Footer";
 import "./App.css";
 
@@ -26,8 +27,8 @@ const App = () => {
       <section id="hero" className="scroll-mt-24">
         <HeroSection />
       </section>
-      
-       {/* ✅ Nutrition Pyramid */}
+
+      {/* ✅ Nutrition Pyramid */}
       <section id="pyramid" className="scroll-mt-24">
         <NutritionPyramid />
       </section>
@@ -47,8 +48,6 @@ const App = () => {
         <MealPlanner bmiData={bmiData} />
       </section>
 
-     
-
       {/* ✅ Quiz Section */}
       <section id="quiz" className="scroll-mt-24">
         <QuizSection />
@@ -57,6 +56,11 @@ const App = () => {
       {/* ✅ FAQ Section */}
       <section id="faq" className="scroll-mt-24">
         <FAQ />
+      </section>
+
+      {/* ✅ Feedback Section */}
+      <section id="feedback" className="scroll-mt-24">
+        <Feedback />
       </section>
 
       {/* ✅ Footer */}
