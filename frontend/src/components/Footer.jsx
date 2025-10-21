@@ -59,8 +59,8 @@ const Footer = () => {
 
       {/* Bottom Note */}
       <div className="text-center pt-8 text-green-300 text-sm">
-        <p>©️ 2025 NutriWell | Designed for SDG 3 – Good Health & Well-being</p>
-        <p className="text-green-400 mt-1">Made with ❤️ using React & TailwindCSS</p>
+        <p>© 2025 NutriWell | Designed for SDG 3 – Good Health & Well-being</p>
+        <p className="text-green-400 mt-1">Made with ❤ using React & TailwindCSS</p>
       </div>
     </footer>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const BMICalculator = () => {
+const BMICalculator = ({ onBmiCalculated }) => {
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
   const [age, setAge] = useState("");
@@ -8,7 +8,7 @@ const BMICalculator = () => {
   const [bmi, setBmi] = useState(null);
   const [category, setCategory] = useState("");
   const [advice, setAdvice] = useState("");
-  const [colorClass, setColorClass] = useState("bg-gray-100"); // 👈 new state for dynamic color
+  const [colorClass, setColorClass] = useState("bg-gray-100");
 
   const calculateBMI = () => {
     if (!height || !weight) return;
@@ -22,29 +22,30 @@ const BMICalculator = () => {
 
     if (bmiValue < 18.5) {
       cat = "Underweight";
-      tip =
-        "Increase calorie intake with healthy foods like nuts, dairy, and whole grains. Include strength training.";
+      tip = "Increase calorie intake with healthy foods like nuts, dairy, and whole grains. Include strength training.";
       color = "bg-blue-100 border-blue-400 text-blue-800";
     } else if (bmiValue < 25) {
       cat = "Normal";
-      tip =
-        "Maintain your current routine. Eat balanced meals and stay active regularly.";
+      tip = "Maintain your current routine. Eat balanced meals and stay active regularly.";
       color = "bg-green-100 border-green-400 text-green-800";
     } else if (bmiValue < 30) {
       cat = "Overweight";
-      tip =
-        "Focus on portion control and reduce refined carbs. Include more vegetables, salads, and fiber-rich foods like millets.";
+      tip = "Focus on portion control and reduce refined carbs. Include more vegetables, salads, and fiber-rich foods like millets.";
       color = "bg-yellow-100 border-yellow-400 text-yellow-800";
     } else {
       cat = "Obese";
-      tip =
-        "Adopt a calorie-controlled diet rich in proteins and fiber. Consult a nutritionist for a personalized plan.";
+      tip = "Adopt a calorie-controlled diet rich in proteins and fiber. Consult a nutritionist for a personalized plan.";
       color = "bg-red-100 border-red-400 text-red-800";
     }
 
     setCategory(cat);
     setAdvice(tip);
-    setColorClass(color); // 👈 sets color dynamically
+    setColorClass(color);
+
+    // ✅ Pass data to Meal Planner
+    if (onBmiCalculated) {
+      onBmiCalculated({ bmi: bmiValue, category: cat, advice: tip });
+    }
   };
 
   const resetForm = () => {
@@ -59,23 +60,22 @@ const BMICalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-green-50 py-12 px-6 flex flex-col items-center">
+    <div className="min-h-[70vh] bg-gradient-to-b from-white to-green-50 py-6 px-6 flex flex-col items-center">
       <h2 className="text-2xl font-semibold text-gray-800 mb-2 flex items-center">
         📊 BMI Calculator
       </h2>
-      <p className="text-gray-600 mb-10 text-center">
+      <p className="text-gray-600 mb-8 text-center max-w-md">
         Calculate your Body Mass Index and get personalized Indian diet recommendations
       </p>
 
       <div className="grid md:grid-cols-2 gap-6 w-full max-w-5xl">
         {/* Left Form */}
-        <div className="bg-white rounded-xl shadow-md border-t-4 border-green-500 p-8">
+        <div className="bg-white rounded-xl shadow-md border-t-4 border-green-500 p-6">
           <h3 className="text-lg font-semibold mb-6 flex items-center gap-2 text-gray-700">
             <span className="text-green-600 text-xl">🧮</span> Your Details
           </h3>
 
           <div className="space-y-4">
-            {/* Inputs */}
             <div>
               <label className="block text-sm font-medium text-gray-700">Height (cm)</label>
               <input
@@ -142,7 +142,7 @@ const BMICalculator = () => {
 
         {/* Right Result */}
         <div
-          className={`rounded-xl shadow-md border p-8 flex flex-col justify-center items-center transition-all duration-500 ${colorClass}`}
+          className={`rounded-xl shadow-md border p-6 flex flex-col justify-center items-center transition-all duration-500 ${colorClass}`}
         >
           {!bmi ? (
             <div className="text-center text-gray-600">

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Send } from "lucide-react";
 
 const Feedback = () => {
   const [formData, setFormData] = useState({
@@ -18,60 +19,71 @@ const Feedback = () => {
     console.log("Feedback submitted:", formData);
     setSubmitted(true);
     setFormData({ name: "", email: "", message: "" });
-
     setTimeout(() => setSubmitted(false), 3000);
   };
 
+  const handleClear = () => {
+    setFormData({ name: "", email: "", message: "" });
+  };
+
   return (
-    <section className="bg-green-50 py-16 px-6 md:px-20" id="feedback">
-      <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-semibold text-green-800 mb-4">
-          We Value Your Feedback
+    <section className="bg-green-50 py-16 px-6 flex justify-center">
+      <div className="bg-white shadow-md rounded-2xl p-10 max-w-2xl w-full">
+        {/* MAIN HEADING */}
+        <h1 className="text-3xl font-extrabold text-green-600 text-center mb-8">
+          FEEDBACK
+        </h1>
+
+        {/* Subheading */}
+        <h2 className="text-xl font-semibold text-gray-800 mb-2">
+          Send Us a Message
         </h2>
-        <p className="text-gray-600 mb-10">
-          Your opinion helps us improve NutriWell. Share your thoughts or
-          suggestions below — we’d love to hear from you!
+        <p className="text-gray-600 mb-8">
+          Share your thoughts, suggestions, or questions
         </p>
 
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white rounded-2xl shadow-md p-8 md:p-10 text-left"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                required
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Enter your name"
-                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                name="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Enter your email"
-                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
-              />
-            </div>
+        {/* FORM */}
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Name Field */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">
+              Your Name <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              name="name"
+              required
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="John Doe"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 
+                         focus:ring-2 focus:ring-green-400 outline-none
+                         text-gray-900 placeholder-gray-400 bg-white"
+            />
           </div>
 
-          <div className="mt-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Message
+          {/* Email Field */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">
+              Email Address <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="email"
+              name="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="john@example.com"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 
+                         focus:ring-2 focus:ring-green-400 outline-none
+                         text-gray-900 placeholder-gray-400 bg-white"
+            />
+          </div>
+
+          {/* Message Field */}
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">
+              Your Message <span className="text-red-500">*</span>
             </label>
             <textarea
               name="message"
@@ -79,23 +91,35 @@ const Feedback = () => {
               rows="4"
               value={formData.message}
               onChange={handleChange}
-              placeholder="Write your feedback..."
-              className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+              placeholder="Tell us what you think about our Nutrition Awareness Website..."
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 
+                         focus:ring-2 focus:ring-green-400 outline-none resize-none
+                         text-gray-900 placeholder-gray-400 bg-white"
             ></textarea>
           </div>
 
-          <div className="mt-8 text-center">
+          {/* Buttons */}
+          <div className="flex gap-3">
             <button
               type="submit"
-              className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full transition-all shadow-md"
+              className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 
+                         text-white font-medium px-6 py-3 rounded-md transition-all"
             >
-              Submit Feedback
+              <Send className="w-4 h-4" /> Send Message
+            </button>
+            <button
+              type="button"
+              onClick={handleClear}
+              className="border border-green-500 text-green-600 font-medium px-6 py-3 
+                         rounded-md hover:bg-green-50 transition-all"
+            >
+              Clear
             </button>
           </div>
 
           {submitted && (
-            <p className="text-green-600 text-center mt-6 font-medium">
-              ✅ Thank you! Your feedback has been received.
+            <p className="text-green-600 mt-4 font-medium text-center">
+              ✅ Thank you! Your message has been sent.
             </p>
           )}
         </form>

@@ -1,27 +1,42 @@
 import React, { useState } from "react";
+import dryFruitLaddu from "../assets/dryfruit_laddu.jpeg";
+import dalTadka from "../assets/dal_tadka.jpeg";
+import paneerTikka from "../assets/paneer_tikka.jpeg";
+import chaatBhelpuri from "../assets/chaat_bhelpuri.jpeg";
+import indoriPoha from "../assets/indori_poha.jpeg";
+import vegThali from "../assets/veg_thali.jpeg";
 
 const recipesData = [
   {
     id: 1,
-    name: "Masala Dosa",
-    image: "DO it",
-    category: "Breakfast",
-    time: "30 min",
-    servings: 4,
-    calories: 250,
-    tags: ["South Indian", "Vegetarian", "Gluten-free"],
-    ingredients: ["Rice batter", "Urad dal", "Potato", "Onion", "Turmeric", "Mustard seeds"],
+    name: "Dry Fruits Ladoo",
+    image: dryFruitLaddu,
+    category: "Snacks/Dessert",
+    time: "25 min",
+    servings: 8,
+    calories: 150,
+    tags: ["Energy-rich", "Healthy", "Nutritious"],
+    ingredients: [
+      "Dates",
+      "Almonds",
+      "Cashews",
+      "Walnuts",
+      "Raisins",
+      "Desiccated coconut",
+      "Cardamom powder",
+    ],
     instructions: [
-      "Prepare batter overnight",
-      "Make thin crispy dosa",
-      "Add potato masala filling",
-      "Serve hot with chutney",
+      "Soak dates and dry fruits for 10-15 minutes.",
+      "Grind dates and nuts together into a coarse mixture.",
+      "Add desiccated coconut and cardamom powder, mix well.",
+      "Shape the mixture into small round ladoos.",
+      "Store in an airtight container or serve immediately.",
     ],
   },
   {
     id: 2,
     name: "Dal Tadka",
-    image: "/images/daltadka.jpg",
+    image: dalTadka,
     category: "Lunch",
     time: "25 min",
     servings: 4,
@@ -29,16 +44,16 @@ const recipesData = [
     tags: ["North Indian", "Protein-rich", "Vegan"],
     ingredients: ["Toor dal", "Onion", "Garlic", "Ghee", "Cumin seeds", "Turmeric"],
     instructions: [
-      "Boil dal with turmeric",
-      "Prepare tadka with ghee, cumin, and garlic",
-      "Mix tadka with dal and simmer for 5 minutes",
-      "Serve hot with rice",
+      "Boil dal with turmeric until soft.",
+      "Prepare tadka with ghee, cumin, and garlic.",
+      "Mix tadka with dal and simmer for 5 minutes.",
+      "Serve hot with rice or roti.",
     ],
   },
   {
     id: 3,
     name: "Paneer Tikka",
-    image: "Paneer-Tikka-Featured-1.jpg",
+    image: paneerTikka,
     category: "Snacks",
     time: "20 min",
     servings: 3,
@@ -46,15 +61,15 @@ const recipesData = [
     tags: ["High-protein", "Vegetarian", "Party Food"],
     ingredients: ["Paneer cubes", "Yogurt", "Spices", "Bell peppers", "Onion"],
     instructions: [
-      "Marinate paneer in yogurt and spices",
-      "Grill or bake until golden",
-      "Serve hot with mint chutney",
+      "Marinate paneer in yogurt and spices for 30 minutes.",
+      "Grill or bake until golden brown.",
+      "Serve hot with mint chutney.",
     ],
   },
   {
     id: 4,
     name: "Poha",
-    image: "/images/poha.jpg",
+    image: indoriPoha,
     category: "Breakfast",
     time: "15 min",
     servings: 2,
@@ -62,16 +77,16 @@ const recipesData = [
     tags: ["Quick", "Light", "Gluten-free"],
     ingredients: ["Poha", "Onion", "Mustard seeds", "Green chilies", "Lemon juice"],
     instructions: [
-      "Rinse poha lightly and drain",
-      "Fry mustard seeds, onion, and chilies",
-      "Add poha and stir for 5 minutes",
-      "Garnish with lemon and coriander",
+      "Rinse poha lightly and drain.",
+      "Fry mustard seeds, onion, and chilies.",
+      "Add poha and stir for 5 minutes.",
+      "Garnish with lemon and coriander leaves.",
     ],
   },
   {
     id: 5,
     name: "Vegetable Thali",
-    image: "/images/thali.jpg",
+    image: vegThali,
     category: "Lunch",
     time: "45 min",
     servings: 2,
@@ -79,26 +94,36 @@ const recipesData = [
     tags: ["Complete meal", "Balanced", "Traditional"],
     ingredients: ["Rice", "Roti", "Curry", "Dal", "Vegetables", "Curd"],
     instructions: [
-      "Prepare individual dishes like dal, sabzi, rice, and roti",
-      "Serve together with curd and pickle",
-      "Enjoy a balanced Indian meal",
+      "Prepare dal, curry, rice, and vegetables.",
+      "Serve with roti, curd, and pickle.",
+      "Enjoy a wholesome Indian meal.",
     ],
   },
   {
     id: 6,
-    name: "Samosa",
-    image: "/images/samosa.jpg",
+    name: "Bhel Chaat",
+    image: chaatBhelpuri,
     category: "Snacks",
-    time: "35 min",
-    servings: 6,
-    calories: 150,
-    tags: ["Fried", "Popular", "Tea-time"],
-    ingredients: ["Potatoes", "Peas", "Spices", "Flour", "Oil"],
+    time: "15 min",
+    servings: 2,
+    calories: 120,
+    tags: ["Tangy", "Popular", "Street Food", "Quick"],
+    ingredients: [
+      "Puffed rice",
+      "Sev",
+      "Onions",
+      "Tomatoes",
+      "Coriander",
+      "Tamarind chutney",
+      "Green chutney",
+      "Lemon",
+    ],
     instructions: [
-      "Prepare spicy potato filling",
-      "Fill pastry dough and fold into triangles",
-      "Deep fry until golden",
-      "Serve with chutney",
+      "Chop onions, tomatoes, and coriander.",
+      "Mix puffed rice, sev, and vegetables in a bowl.",
+      "Add tamarind and green chutney.",
+      "Squeeze lemon juice and toss well.",
+      "Serve immediately.",
     ],
   },
 ];
@@ -113,7 +138,7 @@ const Recipes = () => {
       : recipesData.filter((recipe) => recipe.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-green-50 py-12 px-6 flex flex-col items-center">
+    <div className="bg-gradient-to-b from-white to-green-50 py-12 px-6 flex flex-col items-center">
       <h2 className="text-2xl font-semibold text-gray-800 mb-2 flex items-center">
         🥗 Healthy Indian Recipes
       </h2>
@@ -121,9 +146,9 @@ const Recipes = () => {
         Discover delicious and nutritious recipes from across India
       </p>
 
-      {/* Category Filter Buttons */}
+      {/* Category Filter */}
       <div className="flex flex-wrap gap-3 justify-center mb-10">
-        {["All", "Breakfast", "Lunch", "Snacks"].map((cat) => (
+        {["All", "Breakfast", "Lunch", "Snacks", "Snacks/Dessert"].map((cat) => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
@@ -143,13 +168,17 @@ const Recipes = () => {
         {filteredRecipes.map((recipe) => (
           <div
             key={recipe.id}
-            className="bg-white rounded-xl shadow-md border-t-4 border-green-100 overflow-hidden hover:shadow-lg transition"
+            className="bg-white rounded-xl shadow-md border-t-4 border-green-100 overflow-hidden hover:shadow-lg transition group"
           >
-            <img
-              src={recipe.image}
-              alt={recipe.name}
-              className="w-full h-48 object-cover"
-            />
+            {/* Image Zoom Effect */}
+            <div className="overflow-hidden">
+              <img
+                src={recipe.image}
+                alt={recipe.name}
+                className="w-full h-48 object-cover transform transition-transform duration-500 group-hover:scale-110"
+              />
+            </div>
+
             <div className="p-5">
               <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-md font-medium">
                 {recipe.category}
@@ -175,10 +204,9 @@ const Recipes = () => {
                 ))}
               </div>
 
-              {/* ✅ Clean White Button */}
               <button
                 onClick={() => setSelectedRecipe(recipe)}
-                className="mt-4 w-full border border-green-500 text-green-600 font-semibold rounded-lg py-2 text-sm bg-white hover:bg-green-100 hover:text-green-700 hover:shadow-sm transition duration-300"
+                className="mt-4 w-full bg-white text-green-600 font-semibold rounded-lg py-2 text-sm border border-green-600 hover:bg-green-50 hover:text-green-700 transition duration-300"
               >
                 View Recipe →
               </button>
@@ -187,10 +215,10 @@ const Recipes = () => {
         ))}
       </div>
 
-      {/* Recipe Modal */}
+      {/* Modal (Blurred Background) */}
       {selectedRecipe && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50 px-4">
-          <div className="bg-white rounded-2xl shadow-xl p-6 max-w-lg w-full relative overflow-y-auto max-h-[80vh]">
+        <div className="fixed inset-0 backdrop-blur-sm bg-white/30 flex justify-center items-center z-50 px-4">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-lg w-full relative overflow-y-auto max-h-[80vh] border border-gray-100">
             <button
               className="absolute top-3 right-4 text-gray-500 hover:text-gray-800 text-lg"
               onClick={() => setSelectedRecipe(null)}
