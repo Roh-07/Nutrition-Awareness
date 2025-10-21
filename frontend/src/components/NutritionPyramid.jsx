@@ -1,116 +1,173 @@
 import React, { useState } from "react";
 
-const pyramidData = [
-  {
-    label: "Fats, Oils & Sweets",
-    servings: "Use Sparingly",
-    color: "bg-yellow-400",
-    details: {
-      title: "Fats, Oils & Sweets",
-      text: "Use these sparingly. High in calories but low in nutrients.",
-      examples: "Butter, sweets, fried foods, oils",
-    },
-  },
-  {
-    label: "Milk & Dairy",
-    servings: "2–3 servings/day",
-    color: "bg-sky-300",
-    details: {
-      title: "Milk & Dairy",
-      text: "Provide calcium and protein for bone and muscle health.",
-      examples: "Milk, yogurt, cheese",
-    },
-  },
-  {
-    label: "Protein Foods",
-    servings: "2–3 servings/day",
-    color: "bg-red-400",
-    details: {
-      title: "Protein Foods",
-      text: "Help build and repair body tissues.",
-      examples: "Eggs, fish, chicken, beans",
-    },
-  },
-  {
-    label: "Vegetables",
-    servings: "3–5 servings/day",
-    color: "bg-green-500",
-    details: {
-      title: "Vegetables",
-      text: "Packed with vitamins, minerals, and fiber.",
-      examples: "Spinach, tomatoes, carrots, broccoli",
-    },
-  },
-  {
-    label: "Fruits",
-    servings: "2–4 servings/day",
-    color: "bg-orange-500",
-    details: {
-      title: "Fruits",
-      text: "Rich in vitamins and natural sugars for energy.",
-      examples: "Apples, bananas, oranges, grapes",
-    },
-  },
-  {
-    label: "Grains & Cereals",
-    servings: "6–11 servings/day",
-    color: "bg-amber-400",
-    details: {
-      title: "Grains & Cereals",
-      text: "Primary source of energy; rich in carbohydrates and fiber.",
-      examples: "Rice, wheat, oats, bread, pasta",
-    },
-  },
-];
-
 export default function NutritionPyramid() {
-  const [active, setActive] = useState(null);
+  const [hoveredLevel, setHoveredLevel] = useState(null);
+
+  const pyramidLevels = [
+    {
+      name: "Fats, Oils & Sweets",
+      servings: "Use Sparingly",
+      description: "Ghee, butter, and sweets should be consumed minimally.",
+      examples: "Ghee, coconut oil, jaggery, mithai",
+      color: "#FFD700",
+      width: 200,
+    },
+    {
+      name: "Milk & Dairy",
+      servings: "2–3 servings/day",
+      description: "Rich in calcium and protein for bone health.",
+      examples: "Paneer, dahi, milk, buttermilk",
+      color: "#87CEEB",
+      width: 300,
+    },
+    {
+      name: "Protein Foods",
+      servings: "2–3 servings/day",
+      description: "Essential for muscle building and repair.",
+      examples: "Dal, rajma, chana, eggs, chicken",
+      color: "#FF6347",
+      width: 400,
+    },
+    {
+      name: "Vegetables",
+      servings: "3–5 servings/day",
+      description: "High in vitamins, minerals, and fiber.",
+      examples: "Spinach, tomatoes, carrots, broccoli",
+      color: "#3CB371",
+      width: 500,
+    },
+    {
+      name: "Fruits",
+      servings: "2–4 servings/day",
+      description: "Rich in vitamins, minerals, and antioxidants.",
+      examples: "Mango, banana, apple, papaya",
+      color: "#FF8C00",
+      width: 600,
+    },
+    {
+      name: "Grains & Cereals",
+      servings: "6–11 servings/day",
+      description: "Foundation of energy – whole grains are best.",
+      examples: "Roti, rice, jowar, bajra, oats",
+      color: "#DEB887",
+      width: 700,
+    },
+  ];
+
+  const active = pyramidLevels[hoveredLevel];
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white p-4">
-      <h1 className="text-3xl font-semibold mb-2 text-green-700">
-        The Nutrition Pyramid
-      </h1>
-      <p className="text-gray-600 max-w-md text-center mb-8">
-        A balanced diet includes all food groups in the right proportions.
-        Follow the Nutrition Pyramid to maintain a healthy and active lifestyle.
+    <div
+      style={{
+        background: "#fff",
+        minHeight: "100vh",
+        padding: "60px 0",
+        fontFamily: "Poppins, sans-serif",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <h2 style={{ color: "#5B21B6", fontSize: "32px", marginBottom: "10px" }}>
+        🍽 Indian Food Pyramid
+      </h2>
+      <p
+        style={{
+          color: "#555",
+          textAlign: "center",
+          marginBottom: "50px",
+          maxWidth: "600px",
+          fontSize: "16px",
+        }}
+      >
+        Hover over each level to learn about recommended daily servings and food
+        groups.
       </p>
 
       {/* Pyramid */}
-      <div className="flex flex-col items-center space-y-2">
-        {pyramidData.map((layer, index) => (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "12px",
+          marginBottom: "60px",
+        }}
+      >
+        {pyramidLevels.map((level, index) => (
           <div
             key={index}
-            onMouseEnter={() => setActive(index)}
-            onMouseLeave={() => setActive(null)}
-            className={`relative ${layer.color} text-white font-medium py-3 text-center cursor-pointer transition-transform duration-300 hover:scale-105`}
+            onMouseEnter={() => setHoveredLevel(index)}
+            onMouseLeave={() => setHoveredLevel(null)}
             style={{
-              width: `${100 + index * 30}%`,
-              height:'80px',
-              clipPath:
-                "polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%)",
+              width: `${level.width}px`,
+              height: "80px",
+              backgroundColor: level.color,
+              clipPath: "polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+              fontWeight: "bold",
+              transition: "transform 0.25s ease, box-shadow 0.25s ease",
+              transform: hoveredLevel === index ? "scale(1.05)" : "scale(1)",
+              boxShadow:
+                hoveredLevel === index
+                  ? "0 8px 20px rgba(0,0,0,0.25)"
+                  : "0 4px 10px rgba(0,0,0,0.1)",
+              cursor: "pointer",
+              borderRadius: "4px",
             }}
           >
-            <p>{layer.label}</p>
-            <p className="text-sm">{layer.servings}</p>
+            <div>{level.name}</div>
+            <div style={{ fontSize: "14px", fontWeight: "500" }}>
+              {level.servings}
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Info box */}
-      {active !== null && (
-        <div className="mt-6 bg-white shadow-lg rounded-xl p-4 w-[320px] border border-gray-200 transition-all duration-300">
-          <p className="font-semibold text-gray-800">
-            {pyramidData[active].details.title}
+      {/* Info Box */}
+      {active && (
+        <div
+          style={{
+            width: "500px",
+            background: "white",
+            borderRadius: "12px",
+            boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+            padding: "25px 30px",
+            textAlign: "left",
+            borderTop: `5px solid ${active.color}`,
+            transition: "all 0.3s ease",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "12px",
+              fontWeight: "600",
+              color: "#333",
+            }}
+          >
+            <div
+              style={{
+                width: "12px",
+                height: "12px",
+                borderRadius: "50%",
+                backgroundColor: active.color,
+                marginRight: "10px",
+              }}
+            ></div>
+            {active.name}
+          </div>
+          <p style={{ color: "#444", marginBottom: "10px", lineHeight: "1.5" }}>
+            {active.description}
           </p>
-          <p className="text-gray-600 text-sm mt-1">
-            {pyramidData[active].details.text}
-          </p>
-          <p className="text-gray-500 text-sm mt-2">
-            <span className="font-medium text-gray-700">Examples: </span>
-            <span className="text-green-600">
-              {pyramidData[active].details.examples}
-            </span>
+          <p style={{ color: "#555", fontSize: "15px" }}>
+            <strong style={{ color: "#5B21B6" }}>Examples: </strong>
+            <span style={{ color: "#16A34A" }}>{active.examples}</span>
           </p>
         </div>
       )}
