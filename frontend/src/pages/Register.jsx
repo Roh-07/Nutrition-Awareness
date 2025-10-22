@@ -12,7 +12,7 @@ export default function Register() {
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {
-    const res = await fetch("http://localhost:3000/register", {
+    const res = await fetch("https://nutrition-awareness.onrender.com/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password, name }),
