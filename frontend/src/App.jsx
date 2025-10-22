@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ChatIcon from "./components/ChatIcon"; // 👈 Import Chat Icon
 
 import "./App.css";
 
@@ -23,19 +24,40 @@ const Home = () => {
   const handleBmiCalculated = (data) => setBmiData(data);
 
   return (
-    <div className="font-sans scroll-smooth bg-white text-gray-900">
+    <div className="font-sans scroll-smooth bg-white text-gray-900 relative">
       <Navbar />
 
       {/* All homepage sections */}
-      <section id="hero" className="scroll-mt-24"><HeroSection /></section>
-      <section id="pyramid" className="scroll-mt-24"><NutritionPyramid /></section>
-      <section id="recipes" className="scroll-mt-24"><Recipes /></section>
-      <section id="bmi" className="scroll-mt-24"><BMICalculator onBmiCalculated={handleBmiCalculated} /></section>
-      <section id="mealplans" className="scroll-mt-24"><MealPlanner bmiData={bmiData} /></section>
-      <section id="quiz" className="scroll-mt-24"><QuizSection /></section>
-      <section id="faq" className="scroll-mt-24"><FAQ /></section>
-      <section id="feedback" className="scroll-mt-24"><Feedback /></section>
-      <section id="contact" className="scroll-mt-24"><Footer /></section>
+      <section id="hero" className="scroll-mt-24">
+        <HeroSection />
+      </section>
+      <section id="pyramid" className="scroll-mt-24">
+        <NutritionPyramid />
+      </section>
+      <section id="recipes" className="scroll-mt-24">
+        <Recipes />
+      </section>
+      <section id="bmi" className="scroll-mt-24">
+        <BMICalculator onBmiCalculated={handleBmiCalculated} />
+      </section>
+      <section id="mealplans" className="scroll-mt-24">
+        <MealPlanner bmiData={bmiData} />
+      </section>
+      <section id="quiz" className="scroll-mt-24">
+        <QuizSection />
+      </section>
+      <section id="faq" className="scroll-mt-24">
+        <FAQ />
+      </section>
+      <section id="feedback" className="scroll-mt-24">
+        <Feedback />
+      </section>
+      <section id="contact" className="scroll-mt-24">
+        <Footer />
+      </section>
+
+      {/* 👇 Floating Chatbot Icon */}
+      <ChatIcon />
     </div>
   );
 };
