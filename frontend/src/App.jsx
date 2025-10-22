@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import { AuthProvider } from "./contexts/AuthContext";
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import Recipes from "./components/Recipes";
@@ -64,16 +65,18 @@ const Home = () => {
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        {/* Homepage */}
-        <Route path="/" element={<Home />} />
+    <AuthProvider>
+      <Router>
+        <Routes>
+          {/* Homepage */}
+          <Route path="/" element={<Home />} />
 
-        {/* Separate routes for login and register */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
-    </Router>
+          {/* Separate routes for login and register */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 };
 

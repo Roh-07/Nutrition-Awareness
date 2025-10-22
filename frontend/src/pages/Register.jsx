@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // ✅ import useNavigate
 import bg from "../assets/bg.png";
 
@@ -9,28 +9,51 @@ export default function Register() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch("http://localhost:3000/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, name }),
-      });
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await fetch("http://localhost:3000/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password, name }),
+    });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Registration failed");
+    const data = await res.json();
+    console.log("Register response:", data); // ✅ keep for debugging
 
-      setMessage("Registration successful! Redirecting...");
-      
-      // ✅ Redirect to main page after a short delay (optional)
-      setTimeout(() => {
-        navigate("/"); // redirect to main page
-      }, 1500);
-    } catch (err) {
-      setMessage(err.message);
+    if (!res.ok) throw new Error(data.message || "Registration failed");
+
+    // ✅ Save token & user
+    if (data.token && data.user) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("name", data.user.name); // Add this for Navbar compatibility
+    } else {
+      throw new Error("Token or user data missing from server response");
     }
-  };
+
+    // ✅ Update message & redirect
+    setMessage("Registration successful! Logging you in...");
+    
+    // Trigger a custom event to notify Navbar of login
+    window.dispatchEvent(new CustomEvent('userLoggedIn'));
+    
+    setTimeout(() => {
+      navigate("/"); // change to '/dashboard' if you have one
+    }, 500);
+  } catch (err) {
+    console.error("Registration error:", err);
+    setMessage(err.message);
+  }
+};
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      console.log("Logged in as:", JSON.parse(savedUser));
+    }
+  }, []);
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8 min-w-screen">

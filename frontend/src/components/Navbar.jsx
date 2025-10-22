@@ -1,12 +1,63 @@
 import React, { useState, useEffect } from "react";
 
 const Navbar = () => {
-  const [username, setUsername] = useState(null);
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const storedName = localStorage.getItem("name");
-    if (storedName) setUsername(storedName);
+    // Check if user is logged in on component mount
+    const checkAuth = () => {
+      try {
+        const token = localStorage.getItem('token');
+        const userData = localStorage.getItem('user');
+        const userName = localStorage.getItem('name');
+
+        if (token && (userData || userName)) {
+          if (userData) {
+            setUser(JSON.parse(userData));
+          } else if (userName) {
+            setUser({ name: userName });
+          }
+          setIsAuthenticated(true);
+        }
+      } catch (error) {
+        console.error('Error checking authentication:', error);
+        // Clear invalid data
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('name');
+      }
+    };
+
+    checkAuth();
+
+    // Listen for storage changes (when user logs in from another tab)
+    const handleStorageChange = (e) => {
+      if (e.key === 'token' || e.key === 'user' || e.key === 'name') {
+        checkAuth();
+      }
+    };
+
+    // Listen for custom login event
+    const handleUserLoggedIn = () => {
+      checkAuth();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('userLoggedIn', handleUserLoggedIn);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('userLoggedIn', handleUserLoggedIn);
+    };
   }, []);
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('name');
+    setUser(null);
+    setIsAuthenticated(false);
+  };
 
   const scrollToSection = (id) => {
     const section = document.getElementById(id);
@@ -54,24 +105,38 @@ const Navbar = () => {
       </ul>
 
       {/* Profile / Auth Links */}
-      {username ? (
-        <div className="flex items-center space-x-2">
-          <div className="w-10 h-10 rounded-full bg-green-100 flex justify-center items-center font-semibold text-green-700">
-            {username.charAt(0).toUpperCase()}
+      {isAuthenticated && user ? (
+        <div className="flex items-center space-x-3">
+          {/* User Avatar & Name */}
+          <div className="flex items-center space-x-3 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg border border-white/20">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex justify-center items-center font-bold text-white text-sm shadow-md">
+              {user.name.charAt(0).toUpperCase()}
+            </div>
+            <span className="text-gray-800 font-semibold text-sm">{user.name}</span>
           </div>
-          <span className="text-gray-800 font-medium">{username}</span>
+          
+          {/* Logout Button */}
+          <button
+            onClick={logout}
+            className="group relative flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white text-sm font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5"
+          >
+            <svg className="w-4 h-4 group-hover:rotate-12 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+            <span>Logout</span>
+          </button>
         </div>
       ) : (
-        <div className="flex items-center space-x-6">
+        <div className="flex items-center space-x-4">
           <a
-            href="/Register"
-            className="text-gray-700 font-medium hover:text-green-600 transition-colors duration-200"
+            href="/register"
+            className="px-4 py-2 text-gray-700 font-semibold hover:text-emerald-600 transition-colors duration-200 hover:bg-white/50 rounded-lg"
           >
             Sign Up
           </a>
           <a
-            href="/Login"
-            className="text-gray-700 font-medium hover:text-green-600 transition-colors duration-200"
+            href="/login"
+            className="px-6 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5"
           >
             Login
           </a>
